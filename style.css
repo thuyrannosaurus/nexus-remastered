@@ -6,4 +6,29 @@ img-comparison-slider {
     width: 80%;
     max-width: 800px;
     margin: auto;
+    --divider-width: 2px;
+    --divider-color: #ffffff;
+    --handle-size: 40px;
+}
+
+img-comparison-slider::part(handle) {
+    background-color: #ffffff;
+    border: 2px solid #ffffff;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+}
+
+/* Hide scrollbar but keep functionality */
+#thumbnailContainer {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+}
+
+#thumbnailContainer::-webkit-scrollbar {
+    display: none;
+}
+
+/* Ensure images maintain aspect ratio */
+img-comparison-slider img {
+    aspect-ratio: 16/9;
+    object-fit: cover;
 }
