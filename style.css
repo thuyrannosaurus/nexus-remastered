@@ -1,0 +1,9 @@
+body {
+    font-family: Arial, sans-serif;
+    text-align: center;
+}
+img-comparison-slider {
+    width: 80%;
+    max-width: 800px;
+    margin: auto;
+}
