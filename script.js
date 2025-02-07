@@ -3,7 +3,7 @@ const imagePairs = [
     { 
         old: 'images/1A-old.jpg', 
         new: 'images/1A-new.jpg', 
-        label: 'Listings Search',
+        label: 'Search Overview',
         description: 'Updated the navigation menu with a cleaner layout and improved visibility of menu items.',
         details: {
             title: 'Listings Search Redesign',
@@ -37,7 +37,7 @@ const imagePairs = [
     { 
         old: 'images/1B-old.jpg', 
         new: 'images/1B-new.jpg', 
-        label: 'Page 1B',
+        label: 'Listing Details',
         description: 'Redesigned the search interface with modern filters and better spacing.',
         details: {
             title: 'Listing Details View',
@@ -89,58 +89,27 @@ function handleImageError(event) {
     event.target.style.backgroundColor = '#f0f0f0';
 }
 
-// Initialize the thumbnail gallery
-function initThumbnails() {
-    const container = document.getElementById('thumbnailContainer');
-    
-    imagePairs.forEach((pair, index) => {
-        const thumbnail = document.createElement('div');
-        thumbnail.className = `thumbnail cursor-pointer transition-all ${index === currentIndex ? 'ring-2 ring-blue-500' : ''}`;
-        thumbnail.innerHTML = `
-            <div class="relative">
-                <img src="${pair.new}" 
-                     alt="Design ${index + 1}" 
-                     class="w-24 h-24 object-cover rounded-lg hover:opacity-80 transition-opacity"
-                     onerror="handleImageError(event)" />
-                <span class="absolute bottom-1 left-1 text-xs bg-black/50 text-white px-1.5 py-0.5 rounded">
-                    ${pair.label}
-                </span>
-            </div>
-        `;
-        thumbnail.addEventListener('click', () => updateComparison(index));
-        container.appendChild(thumbnail);
-    });
-}
-
 // Update the comparison slider with new images and details
 function updateComparison(index) {
     currentIndex = index;
     const comparisonSlider = document.querySelector('img-comparison-slider');
+    
+    // Update images
     const firstImage = comparisonSlider.querySelector('[slot="first"]');
     const secondImage = comparisonSlider.querySelector('[slot="second"]');
-    
-    firstImage.onerror = handleImageError;
-    secondImage.onerror = handleImageError;
     
     firstImage.src = imagePairs[index].old;
     secondImage.src = imagePairs[index].new;
     
-    // Update description
-    const descriptionElement = document.getElementById('designDescription');
-    descriptionElement.textContent = imagePairs[index].description;
-    
     // Update detailed information section
     updateDetailedInfo(imagePairs[index].details);
-    
-    // Update thumbnail selection
-    document.querySelectorAll('.thumbnail').forEach((thumb, i) => {
-        thumb.className = `thumbnail cursor-pointer transition-all ${i === index ? 'ring-2 ring-blue-500' : ''}`;
-    });
 }
 
 // Function to update the detailed information section
 function updateDetailedInfo(details) {
     const detailsSection = document.querySelector('.detailed-info');
+    if (!detailsSection || !details) return;
+    
     detailsSection.innerHTML = `
         <h2 class="text-2xl font-semibold text-gray-800 mb-4">${details.title}</h2>
         
@@ -187,21 +156,61 @@ function updateDetailedInfo(details) {
     `;
 }
 
-// Navigation button handlers
-document.getElementById('prevBtn').addEventListener('click', () => {
-    const newIndex = (currentIndex - 1 + imagePairs.length) % imagePairs.length;
-    updateComparison(newIndex);
-});
+function createNavigationItems() {
+    console.log('Creating navigation items...');
+    const navList = document.getElementById('navigationList');
+    if (!navList) {
+        console.error('Navigation list element not found!');
+        return;
+    }
+    
+    imagePairs.forEach((pair, index) => {
+        const item = document.createElement('li');
+        item.innerHTML = `
+            <button class="nav-item w-full text-left ${index === currentIndex ? 'active' : ''}" 
+                    onclick="handleNavClick(${index})">
+                <span class="text-m font-semibold">${pair.label}</span>
+            </button>
+        `;
+        navList.appendChild(item);
+    });
+}
 
-document.getElementById('nextBtn').addEventListener('click', () => {
-    const newIndex = (currentIndex + 1) % imagePairs.length;
-    updateComparison(newIndex);
-});
+// Make handleNavClick globally accessible
+window.handleNavClick = function(index) {
+    console.log('Handling nav click:', index);
+    currentIndex = index;
+    
+    // Update active states
+    document.querySelectorAll('.nav-item').forEach((item, i) => {
+        item.classList.toggle('active', i === index);
+    });
+    
+    // Update comparison
+    updateComparison(index);
+}
 
-// Initialize thumbnails when the page loads
+// Add getIconForLabel function
+function getIconForLabel(label) {
+    // Custom icon based on label
+    if (label.toLowerCase().includes('listing')) {
+        return `<svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" 
+                  d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" />
+        </svg>`;
+    }
+    // Default icon
+    return `<svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" 
+              d="M4 6h16M4 12h16M4 18h7" />
+    </svg>`;
+}
+
+// Initialize when DOM is ready
 document.addEventListener('DOMContentLoaded', () => {
-    initThumbnails();
-    // Set initial description
-    const descriptionElement = document.getElementById('designDescription');
-    descriptionElement.textContent = imagePairs[0].description;
+    console.log('DOM loaded, initializing...');
+    createNavigationItems();
+    
+    // Set initial content
+    updateComparison(0);
 }); 
