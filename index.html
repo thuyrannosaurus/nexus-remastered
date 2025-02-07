@@ -3,48 +3,66 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Design Comparison Tool</title>
+    <title>Nexus Remastered</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="style.css">
 </head>
-<body class="bg-gray-100 min-h-screen p-4 md:p-8">
-    <div class="max-w-6xl mx-auto">
-        <h1 class="text-3xl font-bold text-gray-800 mb-8 text-center">Nexus Remastered</h1>
-        
-        <div class="relative">
-            <!-- Main comparison slider -->
-            <div class="comparison-container bg-white rounded-lg shadow-lg overflow-hidden">
-                <img-comparison-slider tabindex="0">
-                    <img slot="first" src="images/1A-old.jpg" alt="Old design" loading="lazy" onerror="console.error('Error loading old image:', this.src)" />
-                    <img slot="second" src="images/1A-new.jpg" alt="New design" loading="lazy" onerror="console.error('Error loading new image:', this.src)" />
-                    <div slot="handle" class="handle-container">
-                        <div class="handle"></div>
-                    </div>
-                </img-comparison-slider>
-            </div>
-
-            <!-- Description container -->
-            <div id="designDescription" class="text-gray-700 text-xs px-6 py-4">
-                <!-- Description will be inserted here by JavaScript -->
-            </div>
-
-            <!-- Navigation arrows -->
-            <button id="prevBtn" class="absolute top-1/2 bg-white/80 hover:bg-white p-2 rounded-full shadow-lg">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
-                </svg>
-            </button>
-            <button id="nextBtn" class="absolute top-1/2 bg-white/80 hover:bg-white p-2 rounded-full shadow-lg">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
-                </svg>
-            </button>
+<body class="bg-gray-100">
+    <!-- Header -->
+    <header class="fixed top-0 left-0 right-0 bg-white shadow-sm z-50">
+        <div class="max-w-6xl mx-auto px-4 py-3 flex items-center justify-between">
+            <div class="text-xl font-bold text-gray-800">Nexus Remastered</div>
         </div>
+    </header>
 
-        <!-- Thumbnail gallery -->
-        <div class="mt-6 overflow-x-auto pb-4">
-            <div id="thumbnailContainer" class="flex gap-4 justify-start min-w-min px-4">
-                <!-- Thumbnails will be inserted here by JavaScript -->
+    <!-- Main content -->
+    <main class="min-h-screen pt-16 pb-32">
+        <div class="max-w-6xl mx-auto p-4">
+            <!-- Comparison tool section -->
+            <div class="relative mb-8">
+                <!-- Main comparison slider -->
+                <div class="comparison-container bg-white rounded-lg shadow-lg overflow-hidden">
+                    <img-comparison-slider tabindex="0">
+                        <img slot="first" src="images/1A-old.jpg" alt="Old design" loading="lazy" onerror="console.error('Error loading old image:', this.src)" />
+                        <img slot="second" src="images/1A-new.jpg" alt="New design" loading="lazy" onerror="console.error('Error loading new image:', this.src)" />
+                        <div slot="handle" class="handle-container">
+                            <div class="handle"></div>
+                        </div>
+                    </img-comparison-slider>
+                </div>
+
+                <!-- Description container -->
+                <div id="designDescription" class="text-gray-700 text-xs px-6 py-4">
+                    <!-- Description will be inserted here by JavaScript -->
+                </div>
+
+                <!-- Navigation arrows -->
+                <button id="prevBtn" class="absolute top-1/2 bg-white/80 hover:bg-white p-2 rounded-full shadow-lg">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+                    </svg>
+                </button>
+                <button id="nextBtn" class="absolute top-1/2 bg-white/80 hover:bg-white p-2 rounded-full shadow-lg">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+                    </svg>
+                </button>
+            </div>
+
+            <!-- Detailed information section -->
+            <div class="detailed-info bg-white rounded-lg shadow-sm p-6 text-left">
+                <!-- Content will be dynamically inserted here -->
+            </div>
+        </div>
+    </main>
+
+    <!-- Sticky thumbnail tray -->
+    <div class="fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 shadow-lg z-50">
+        <div class="max-w-6xl mx-auto px-4 py-3">
+            <div class="overflow-x-auto">
+                <div id="thumbnailContainer" class="flex gap-4 justify-start min-w-min pb-1">
+                    <!-- Thumbnails will be inserted here by JavaScript -->
+                </div>
             </div>
         </div>
     </div>
