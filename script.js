@@ -9,11 +9,27 @@ const imagePairs = [
             title: 'Listings Search Redesign',
             figmaLink: 'https://www.figma.com/design/2MoX9p4NZbALEiM5jXOSXD/CSX-Nexus-Warp?node-id=898-12881&t=PXwuZq06uLH9iDqa-4',
             overview: 'The listings search interface has been completely revamped to provide a more intuitive and efficient search experience.',
-            keyChanges: [
-                'Modernized filter system with instant search results',
-                'Improved layout hierarchy for better scanability',
-                'Added quick action buttons for common filters',
-                'Enhanced mobile responsiveness for better usability'
+            designChanges: [
+                {
+                    element: 'Filters & Search Inputs',
+                    oldDesign: 'Spread out and visually disconnected',
+                    newDesign: 'Compact, aligned, and scannable'
+                },
+                {
+                    element: 'Side Navigation',
+                    oldDesign: 'Dark-themed with high contrast',
+                    newDesign: 'Lighter, modernized design with clearer icons'
+                },
+                {
+                    element: 'Listing Cards',
+                    oldDesign: 'Dense and cluttered',
+                    newDesign: 'Refined, readable, and better structured'
+                },
+                {
+                    element: 'Sorting & Actions',
+                    oldDesign: 'Separate from key interactions',
+                    newDesign: 'Placed strategically for better accessibility'
+                }
             ],
             implementationNotes: 'The new search interface uses advanced caching techniques and debounced search to ensure smooth performance even with large datasets.'
         }
@@ -27,11 +43,37 @@ const imagePairs = [
             title: 'Listing Details View',
             figmaLink: 'https://www.figma.com/design/2MoX9p4NZbALEiM5jXOSXD/CSX-Nexus-Warp?node-id=977-13515&t=PXwuZq06uLH9iDqa-11',
             overview: 'The listing details page has been redesigned to showcase important information more effectively.',
-            keyChanges: [
-                'Reorganized content hierarchy',
-                'Added image gallery improvements',
-                'Enhanced contact information visibility',
-                'Improved sharing capabilities'
+            designChanges: [
+                {
+                    "element": "Page Layout",
+                    "oldDesign": "Scattered information with minimal grouping, making it harder to scan key details.",
+                    "newDesign": "Structured sections with clear grouping, improving readability and organization."
+                },
+                {
+                    "element": "Listing Title & Summary",
+                    "oldDesign": "Small text size with limited emphasis on important details like price and status.",
+                    "newDesign": "Bold listing title with price and status emphasized for quicker scanning."
+                },
+                {
+                    "element": "Image Carousel",
+                    "oldDesign": "Wide central image with a horizontal filmstrip below, requiring extra clicks to navigate.",
+                    "newDesign": "Larger, high-contrast image carousel with better spacing and improved thumbnail interaction."
+                },
+                {
+                    "element": "Advertiser Information",
+                    "oldDesign": "Listed below the image carousel with less hierarchy, making it easy to miss.",
+                    "newDesign": "Clearly separated section with distinct labels, improving user focus on relevant information."
+                },
+                {
+                    "element": "Metadata & External Links",
+                    "oldDesign": "Buried in the UI with small links, making it harder to access external tools.",
+                    "newDesign": "Dedicated External Links and Metadata sections with improved button visibility."
+                },
+                {
+                    "element": "Download & Actions",
+                    "oldDesign": "Small, scattered buttons for copying text or downloading images.",
+                    "newDesign": "Centralized Download Images button, improving accessibility and reducing clutter."
+                }
             ],
             implementationNotes: 'New image lazy loading system implemented to improve page load performance.'
         }
@@ -115,16 +157,31 @@ function updateDetailedInfo(details) {
             <!-- Main description -->
             <div class="prose max-w-none">
                 <p class="text-gray-600 mb-4">${details.overview}</p>
-                
-                <ul class="list-disc pl-5 space-y-2 text-gray-600">
-                    ${details.keyChanges.map(change => `<li>${change}</li>`).join('')}
-                </ul>
             </div>
 
-            <!-- Additional context -->
-            <div class="mt-6 pt-6 border-t border-gray-100">
-                <h3 class="text-lg font-semibold text-gray-800 mb-3">Implementation Notes</h3>
-                <p class="text-gray-600">${details.implementationNotes}</p>
+            <!-- Key Design Changes Table -->
+            <div class="mt-8">
+                <h3 class="text-xl font-semibold text-gray-800 mb-4">✨ Key Design Changes</h3>
+                <div class="overflow-hidden rounded-lg border border-gray-200">
+                    <table class="min-w-full divide-y divide-gray-200">
+                        <thead class="bg-gray-50">
+                            <tr>
+                                <th class="px-6 py-3 text-left text-sm font-semibold text-gray-900">Element</th>
+                                <th class="px-6 py-3 text-left text-sm font-semibold text-gray-900">Old Design</th>
+                                <th class="px-6 py-3 text-left text-sm font-semibold text-gray-900">New Design</th>
+                            </tr>
+                        </thead>
+                        <tbody class="divide-y divide-gray-200 bg-white">
+                            ${details.designChanges.map(change => `
+                                <tr>
+                                    <td class="px-6 py-4 text-sm font-medium text-gray-900">${change.element}</td>
+                                    <td class="px-6 py-4 text-sm text-gray-500">${change.oldDesign}</td>
+                                    <td class="px-6 py-4 text-sm text-gray-900">${change.newDesign}</td>
+                                </tr>
+                            `).join('')}
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </div>
     `;
