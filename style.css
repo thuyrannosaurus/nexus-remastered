@@ -1,6 +1,8 @@
 body {
     font-family: Inter, sans-serif;
     text-align: center;
+    margin: 0;
+    padding: 0;
 }
 
 /* Comparison slider container styles */
@@ -93,6 +95,24 @@ img-comparison-slider img {
     padding: 0 56px; /* Add padding to make space for the arrows */
 }
 
+/* Thumbnail tray styles */
+.overflow-x-auto {
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+}
+
+.overflow-x-auto::-webkit-scrollbar {
+    display: none;
+}
+
+/* Adjust thumbnail size */
+#thumbnailContainer img {
+    width: 120px;
+    height: 80px;
+    object-fit: cover;
+}
+
 /* Responsive adjustments for smaller screens */
 @media (max-width: 768px) {
     .relative {
@@ -105,5 +125,37 @@ img-comparison-slider img {
 
     #nextBtn {
         right: 4px; /* Return to original position on mobile */
+    }
+
+    main {
+        padding-bottom: 140px; /* Increased padding for mobile */
+    }
+}
+
+/* Information section styles */
+.prose {
+    font-size: 0.95rem;
+    line-height: 1.6;
+}
+
+.prose ul {
+    margin-top: 1.5em;
+    margin-bottom: 1.5em;
+}
+
+.prose ul li {
+    margin-top: 0.5em;
+    margin-bottom: 0.5em;
+}
+
+/* Link hover effects */
+a.hover\:text-blue-800:hover {
+    transition: color 0.15s ease-in-out;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .prose {
+        font-size: 0.9rem;
     }
 }
