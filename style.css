@@ -1,5 +1,5 @@
 body {
-    font-family: Arial, sans-serif;
+    font-family: 'Comic Sans MS', 'Comic Sans', cursive;
     text-align: center;
 }
 
@@ -75,4 +75,35 @@ img-comparison-slider img {
 
 #thumbnailContainer::-webkit-scrollbar {
     display: none;
+}
+
+/* Navigation arrow buttons */
+#prevBtn {
+    left: -8px;  /* Move outside the container by 56px */
+    transform: translateY(-50%);
+}
+
+#nextBtn {
+    right: -8px;  /* Move outside the container by 56px */
+    transform: translateY(-50%);
+}
+
+/* Make container relative to allow arrows to position correctly */
+.relative {
+    padding: 0 56px; /* Add padding to make space for the arrows */
+}
+
+/* Responsive adjustments for smaller screens */
+@media (max-width: 768px) {
+    .relative {
+        padding: 0; /* Remove padding on mobile */
+    }
+
+    #prevBtn {
+        left: 4px; /* Return to original position on mobile */
+    }
+
+    #nextBtn {
+        right: 4px; /* Return to original position on mobile */
+    }
 }
