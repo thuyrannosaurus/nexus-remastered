@@ -7,17 +7,14 @@ body {
 .comparison-container {
     position: relative;
     width: 100%;
-    aspect-ratio: 16/9;
 }
 
 img-comparison-slider {
     --divider-width: 2px;
-    --divider-color: #fff;
-    position: absolute;
-    top: 0;
-    left: 0;
+    --divider-color: #ebe7e7;
+    display: block;
     width: 100%;
-    height: 100%;
+    height: auto;
 }
 
 /* Handle styles */
@@ -64,8 +61,10 @@ img-comparison-slider {
 /* Image styles */
 img-comparison-slider img {
     width: 100%;
-    height: 100%;
-    object-fit: cover;
+    height: auto;
+    object-fit: contain;
+    max-width: 100%;
+    display: block;
 }
 
 /* Hide scrollbar but keep functionality */

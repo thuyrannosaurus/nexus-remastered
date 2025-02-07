@@ -1,12 +1,18 @@
 // Image pairs configuration
 const imagePairs = [
-    { old: 'images/1A-old.jpg.png', new: 'images/1A-new.jpg' },
+    { old: 'images/1A-old.jpg', new: 'images/1A-new.jpg' },
     { old: 'images/2A-old.jpg', new: 'images/2A-new.jpg' },
     { old: 'images/3A-old.jpg', new: 'images/3A-new.jpg' },
     // Add more image pairs as needed
 ];
 
 let currentIndex = 0;
+
+// Add error handling for images
+function handleImageError(event) {
+    console.error(`Error loading image: ${event.target.src}`);
+    event.target.style.backgroundColor = '#f0f0f0'; // Add a background color to show where image should be
+}
 
 // Initialize the thumbnail gallery
 function initThumbnails() {
@@ -30,6 +36,10 @@ function updateComparison(index) {
     const comparisonSlider = document.querySelector('img-comparison-slider');
     const firstImage = comparisonSlider.querySelector('[slot="first"]');
     const secondImage = comparisonSlider.querySelector('[slot="second"]');
+    
+    // Add error handling to images
+    firstImage.onerror = handleImageError;
+    secondImage.onerror = handleImageError;
     
     firstImage.src = imagePairs[index].old;
     secondImage.src = imagePairs[index].new;

@@ -15,8 +15,8 @@
             <!-- Main comparison slider -->
             <div class="comparison-container bg-white rounded-lg shadow-lg overflow-hidden">
                 <img-comparison-slider tabindex="0">
-                    <img slot="first" src="images/1A-old.jpg" alt="Old design" loading="lazy" />
-                    <img slot="second" src="images/1A-new.jpg" alt="New design" loading="lazy" />
+                    <img slot="first" src="images/1A-old.jpg" alt="Old design" loading="lazy" onerror="console.error('Error loading old image:', this.src)" />
+                    <img slot="second" src="images/1A-new.jpg" alt="New design" loading="lazy" onerror="console.error('Error loading new image:', this.src)" />
                     <div slot="handle" class="handle-container">
                         <div class="handle"></div>
                     </div>
