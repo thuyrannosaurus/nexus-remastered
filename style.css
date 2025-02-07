@@ -1,8 +1,9 @@
 body {
-    font-family: Inter, sans-serif;
-    text-align: center;
+    font-family: 'Inter', sans-serif;
     margin: 0;
     padding: 0;
+    background-color: #fafafa;
+    color: #374151;
 }
 
 /* Comparison slider container styles */
@@ -13,7 +14,9 @@ body {
 
 img-comparison-slider {
     --divider-width: 2px;
-    --divider-color: #ebe7e7;
+    --divider-color: #2563eb;
+    --default-handle-color: #2563eb;
+    --default-handle-width: 40px;
     display: block;
     width: 100%;
     height: auto;
@@ -159,3 +162,48 @@ a.hover\:text-blue-800:hover {
         font-size: 0.9rem;
     }
 }
+
+/* Typography */
+.sans {
+    font-family: 'Inter', sans-serif;
+}
+
+/* Animations */
+.slide-enter {
+    transform: translateX(-100%);
+}
+
+.slide-enter-active {
+    transform: translateX(0);
+    transition: transform 300ms ease-out;
+}
+
+/* Sophisticated colors */
+:root {
+    --color-text-primary: #374151;
+    --color-text-secondary: #4b5563;
+    --color-border: #e5e5e5;
+    --shadow-subtle: 0 2px 4px rgba(0,0,0,0.05);
+    --shadow-medium: 0 4px 6px rgba(0,0,0,0.04);
+}
+
+/* Navigation items */
+.nav-item {
+    display: block;
+    padding: 0.5rem 1rem;
+    color: var(--color-text-secondary);
+    transition: color 200ms ease;
+    border-radius: 4px;
+}
+
+.nav-item:hover:not(.active) {
+    background-color: #f3f4f6;
+}
+
+.nav-item.active {
+    color: #3b82f6;
+    background-color: #eff6ff;
+}
+
+
+
