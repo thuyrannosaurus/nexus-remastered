@@ -169,7 +169,7 @@ function createNavigationItems() {
         item.innerHTML = `
             <button class="nav-item w-full text-left ${index === currentIndex ? 'active' : ''}" 
                     onclick="handleNavClick(${index})">
-                <span class="text-m font-semibold">${pair.label}</span>
+                <span class="text-xs font-bold uppercase tracking-wider">${pair.label}</span>
             </button>
         `;
         navList.appendChild(item);

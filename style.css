@@ -13,8 +13,8 @@ body {
 }
 
 img-comparison-slider {
-    --divider-width: 2px;
-    --divider-color: #2563eb;
+    --divider-width: 3px;
+    --divider-color: #c6c6c6;
     --default-handle-color: #2563eb;
     --default-handle-width: 40px;
     display: block;
@@ -185,12 +185,14 @@ a.hover\:text-blue-800:hover {
     --color-border: #e5e5e5;
     --shadow-subtle: 0 2px 4px rgba(0,0,0,0.05);
     --shadow-medium: 0 4px 6px rgba(0,0,0,0.04);
+    /* Add sidebar positioning variable */
+    --sidebar-offset: -30vh;  /* Negative value moves it up, positive moves it down */
 }
 
 /* Navigation items */
 .nav-item {
     display: block;
-    padding: 0.5rem 1rem;
+    padding: 0.3rem 1rem;
     color: var(--color-text-secondary);
     transition: color 200ms ease;
     border-radius: 4px;
@@ -202,7 +204,22 @@ a.hover\:text-blue-800:hover {
 
 .nav-item.active {
     color: #3b82f6;
-    background-color: #eff6ff;
+}
+
+/* Sticky sidebar styles */
+.sticky {
+    position: sticky;
+    height: fit-content;
+    /* Use the offset variable */
+    top: calc(50% + var(--sidebar-offset));
+    transform: translateY(-50%);
+}
+
+/* Primary sidebar */
+aside {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
 }
 
 
