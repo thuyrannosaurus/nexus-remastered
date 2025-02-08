@@ -34,7 +34,7 @@ const imagePairs = [
             implementationNotes: 'The new search interface uses advanced caching techniques and debounced search to ensure smooth performance even with large datasets.',
             
             whyThisMatters: {
-                description: 'The new Search Overview design aligns with fundamental UX laws, ensuring faster interactions and better readability.',
+                description: 'The new Listings Overview design aligns with fundamental UX laws, ensuring faster interactions, better readability, and a more intuitive workflow. These changes empower users to find and manage listings more effectively, leading to a smoother experience and higher engagement.',
                 uxResources: [
                     {
                         title: 'Fitts Law',
