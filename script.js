@@ -92,14 +92,32 @@ function handleImageError(event) {
 // Update the comparison slider with new images and details
 function updateComparison(index) {
     currentIndex = index;
-    const comparisonSlider = document.querySelector('img-comparison-slider');
+    const compareContainer = document.getElementById('image-compare');
     
-    // Update images
-    const firstImage = comparisonSlider.querySelector('[slot="first"]');
-    const secondImage = comparisonSlider.querySelector('[slot="second"]');
+    // Clear existing content
+    compareContainer.innerHTML = `
+        <img src="${imagePairs[index].old}" alt="Old design" />
+        <img src="${imagePairs[index].new}" alt="New design" />
+    `;
     
-    firstImage.src = imagePairs[index].old;
-    secondImage.src = imagePairs[index].new;
+    // Initialize with options
+    const viewer = new ImageCompare(compareContainer, {
+        controlColor: "#3b82f6",
+        controlShadow: false,
+        addCircle: true,
+        addCircleBlur: true,
+        smoothing: true,
+        smoothingAmount: 700,
+        hoverStart: true,
+        verticalMode: false,
+        startingPoint: 50,
+        fluidMode: true,
+        labelOptions: {
+            before: 'Old',
+            after: 'New',
+            onHover: false
+        }
+    }).mount();
     
     // Update detailed information section
     updateDetailedInfo(imagePairs[index].details);
