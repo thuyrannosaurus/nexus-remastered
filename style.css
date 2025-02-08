@@ -6,21 +6,25 @@ body {
     color: #374151;
 }
 
-/* Comparison slider container styles */
+/* Comparison container styles */
 .comparison-container {
     position: relative;
     width: 100%;
+    overflow: hidden;
 }
 
 #image-compare {
     width: 100%;
     position: relative;
+    overflow: hidden;
 }
 
 #image-compare img {
     width: 100%;
+    height: auto;
     display: block;
     max-width: 100%;
+    object-fit: cover;
 }
 
 /* Hide scrollbar but keep functionality */
@@ -178,6 +182,32 @@ aside {
 /* Custom logo filter for dark mode */
 .dark .logo-filter {
     filter: brightness(0) invert(1);
+}
+
+/* Content transition classes */
+.page-exit {
+    opacity: 0;
+    /* Combine translate and scale for a more dramatic exit */
+    transform: translateY(40px);
+    transition: all 300ms ease-out;
+}
+
+.page-enter {
+    opacity: 0;
+    /* Start slightly larger and from below */
+    transform: translateY(20px);
+    transition: all 300ms ease-out;
+}
+
+.page-enter-active {
+    opacity: 1;
+    /* Return to normal size and position */
+    transform: translateY(0) scale(1);
+}
+
+/* Make sure the slider handle is visible */
+.icv__control {
+    z-index: 5;
 }
 
 

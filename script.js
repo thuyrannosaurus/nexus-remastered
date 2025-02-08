@@ -125,6 +125,7 @@ const imagePairs = [
 ];
 
 let currentIndex = 0;
+let currentCompare = null; // Track current comparison instance
 
 // Add error handling for images
 function handleImageError(event) {
@@ -134,38 +135,74 @@ function handleImageError(event) {
 
 // Update the comparison slider with new images and details
 function updateComparison(index) {
-    console.log('Updating comparison for:', imagePairs[index].label);
-    currentIndex = index;
+    console.log('Updating comparison for index:', index);
+    const mainContent = document.querySelector('main > div');
     const compareContainer = document.getElementById('image-compare');
     
-    // Clear existing content
-    compareContainer.innerHTML = `
-        <img src="${imagePairs[index].old}" alt="Old design" />
-        <img src="${imagePairs[index].new}" alt="New design" />
-    `;
+    // Exit animation
+    mainContent.classList.add('page-exit');
     
-    // Initialize with options
-    const options = {
-        controlColor: "#2563eb",
-        controlShadow: true,
-        addCircle: true,
-        addCircleBlur: false,
-        fluidMode: true,
-        fluidSpeed: 300,
-        hoverStart: false,
-        verticalMode: false,
-        startingPoint: 50,
-        labelOptions: {
-            before: 'Old',
-            after: 'New',
-            onHover: true
+    setTimeout(() => {
+        // Cleanup previous instance
+        if (currentCompare) {
+            console.log('Destroying previous instance');
+            currentCompare.destroy();
         }
-    };
-    
-    new ImageCompare(compareContainer, options).mount();
-    
-    console.log('About to update details with:', imagePairs[index].details);
-    updateDetailedInfo(imagePairs[index].details);
+        
+        // Update the images
+        compareContainer.innerHTML = `
+            <img src="${imagePairs[index].old}" alt="Old design" />
+            <img src="${imagePairs[index].new}" alt="New design" />
+        `;
+
+        console.log('Creating new comparison with images:', {
+            old: imagePairs[index].old,
+            new: imagePairs[index].new
+        });
+
+        // Initialize comparison slider with options
+        const options = {
+            controlColor: "#2563eb",
+            controlShadow: true,
+            addCircle: true,
+            addCircleBlur: false,
+            fluidMode: true,
+            fluidSpeed: 300,
+            hoverStart: false,
+            verticalMode: false,
+            startingPoint: 50,
+            labelOptions: {
+                before: 'Old',
+                after: 'New',
+                onHover: true
+            }
+        };
+        
+        try {
+            // Create new instance
+            currentCompare = new ImageCompare(compareContainer, options).mount();
+            console.log('Successfully mounted new comparison');
+        } catch (error) {
+            console.error('Error mounting comparison:', error);
+        }
+        
+        // Update details
+        updateDetailedInfo(imagePairs[index].details);
+
+        // Animation sequence
+        mainContent.classList.remove('page-exit');
+        requestAnimationFrame(() => {
+            mainContent.classList.add('page-enter');
+            requestAnimationFrame(() => {
+                mainContent.classList.add('page-enter-active');
+            });
+        });
+
+        // Cleanup animation classes
+        setTimeout(() => {
+            mainContent.classList.remove('page-enter', 'page-enter-active');
+        }, 500);
+    }, 300);
 }
 
 // Function to update the detailed information section
@@ -250,11 +287,11 @@ function createNavigationItems() {
     imagePairs.forEach((pair, index) => {
         const item = document.createElement('li');
         item.innerHTML = `
-            <button class="nav-item w-full text-left font-bold text-xs 
-                ${index === currentIndex ? 
-                    'text-blue-500 dark:text-blue-400 bg-blue-50 dark:bg-blue-900/30 hover:bg-blue-100 dark:hover:bg-blue-900/50' : 
-                    'text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800/50'}" 
-                onclick="handleNavClick(${index})">
+            <button class="nav-item w-full text-left font-bold text-xs ${
+                index === currentIndex ? 
+                'text-blue-500 dark:text-blue-400 bg-blue-50 dark:bg-blue-900/30 hover:bg-blue-100 dark:hover:bg-blue-900/50' : 
+                'text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800/50'
+            }" onclick="handleNavClick(${index})">
                 <span class="text-xs font-bold uppercase tracking-wider">${pair.label}</span>
             </button>
         `;
@@ -338,7 +375,7 @@ function initializeTheme() {
     });
 }
 
-// Initialize when DOM is ready
+// Initialize first comparison on load
 document.addEventListener('DOMContentLoaded', () => {
     console.log('DOM loaded, initializing...');
     createNavigationItems();
