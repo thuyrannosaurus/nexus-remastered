@@ -6,9 +6,9 @@ const imagePairs = [
         label: 'Search Overview',
         description: 'Updated the navigation menu with a cleaner layout and improved visibility of menu items.',
         details: {
-            title: 'Listings Search Redesign',
-            figmaLink: 'https://www.figma.com/design/2MoX9p4NZbALEiM5jXOSXD/CSX-Nexus-Warp?node-id=898-12881&t=PXwuZq06uLH9iDqa-4',
-            overview: 'These improvements significantly enhance usability, efficiency, and clarity for users managing listings. Each change is grounded in UX best practices and ensures a smoother experience for both new and experienced users.',
+            title: 'Search Overview Redesign',
+            figmaLink: 'https://figma.com/file/search-overview',
+            overview: 'The search interface has been completely revamped to provide a more intuitive and efficient search experience.',
             designChanges: [
                 {
                     element: 'Filters & Search Inputs',
@@ -34,7 +34,7 @@ const imagePairs = [
             implementationNotes: 'The new search interface uses advanced caching techniques and debounced search to ensure smooth performance even with large datasets.',
             
             whyThisMatters: {
-                description: 'The new Listings Overview design aligns with fundamental <b>UX laws</b>, ensuring <b>faster interactions, better readability, and a more intuitive workflow</b>. These changes <b>empower users to find and manage listings more effectively</b>, leading to a <b>smoother experience and higher engagement</b>.',
+                description: 'The new Search Overview design aligns with fundamental UX laws, ensuring faster interactions and better readability.',
                 uxResources: [
                     {
                         title: 'Fitts Law',
@@ -64,10 +64,10 @@ const imagePairs = [
         old: 'images/1B-old.jpg', 
         new: 'images/1B-new.jpg', 
         label: 'Listing Details',
-        description: 'Redesigned the search interface with modern filters and better spacing.',
+        description: 'Redesigned the listing details page for better information hierarchy.',
         details: {
-            title: 'Listing Details View',
-            figmaLink: 'https://www.figma.com/design/2MoX9p4NZbALEiM5jXOSXD/CSX-Nexus-Warp?node-id=977-13515&t=PXwuZq06uLH9iDqa-11',
+            title: 'Listing Details Redesign',
+            figmaLink: 'https://figma.com/file/listing-details',
             overview: 'The listing details page has been redesigned to showcase important information more effectively.',
             designChanges: [
                 {
@@ -101,7 +101,24 @@ const imagePairs = [
                     "newDesign": "Centralized Download Images button, improving accessibility and reducing clutter."
                 }
             ],
-            implementationNotes: 'New image lazy loading system implemented to improve page load performance.'
+            implementationNotes: 'New image lazy loading system implemented to improve page load performance.',
+            whyThisMatters: {
+                description: 'The Listing Details redesign improves information hierarchy and scanning patterns, making it easier for users to find critical information quickly.',
+                uxResources: [
+                    {
+                        title: 'Visual Hierarchy',
+                        url: 'https://www.nngroup.com/articles/visual-hierarchy-ux-definition/'
+                    },
+                    {
+                        title: 'F-Pattern',
+                        url: 'https://www.nngroup.com/articles/f-shaped-pattern-reading-web-content/'
+                    },
+                    {
+                        title: 'Content Organization',
+                        url: 'https://www.nngroup.com/articles/content-organization/'
+                    }
+                ]
+            }
         }
     },
     // Add more image pairs as needed
@@ -117,6 +134,7 @@ function handleImageError(event) {
 
 // Update the comparison slider with new images and details
 function updateComparison(index) {
+    console.log('Updating comparison for:', imagePairs[index].label);
     currentIndex = index;
     const compareContainer = document.getElementById('image-compare');
     
@@ -127,66 +145,71 @@ function updateComparison(index) {
     `;
     
     // Initialize with options
-    const viewer = new ImageCompare(compareContainer, {
-        controlColor: "#3b82f6",
+    const options = {
+        controlColor: "#2563eb",
         controlShadow: true,
         addCircle: true,
-        addCircleBlur: true,
-        smoothing: true,
-        smoothingAmount: 700,
+        addCircleBlur: false,
+        fluidMode: true,
+        fluidSpeed: 300,
         hoverStart: false,
         verticalMode: false,
         startingPoint: 50,
-        fluidMode: true,
         labelOptions: {
             before: 'Old',
             after: 'New',
-            onHover: false
+            onHover: true
         }
-    }).mount();
+    };
     
-    // Update detailed information section
+    new ImageCompare(compareContainer, options).mount();
+    
+    console.log('About to update details with:', imagePairs[index].details);
     updateDetailedInfo(imagePairs[index].details);
 }
 
 // Function to update the detailed information section
 function updateDetailedInfo(details) {
+    console.log('Updating detailed info:', details);
     const detailsSection = document.querySelector('.detailed-info');
-    if (!detailsSection || !details) return;
+    if (!detailsSection || !details) {
+        console.error('Missing elements:', { detailsSection, details });
+        return;
+    }
     
     detailsSection.innerHTML = `
         <div class="flex justify-between items-center mb-4 pt-8">
-            <h2 class="text-3xl font-semibold text-gray-800">${details.title}</h2>
+            <h2 class="text-3xl font-semibold text-gray-800 dark:text-gray-100">${details.title}</h2>
             <a href="${details.figmaLink}" target="_blank" 
-               class="inline-flex items-center gap-2 px-4 py-2 text-sm font-medium text-white bg-gray-900 rounded-lg hover:bg-blue-600 transition-colors">
+               class="inline-flex items-center gap-2 px-4 py-2 text-sm font-medium text-white bg-gray-900 dark:bg-gray-700 rounded-lg hover:bg-blue-600 dark:hover:bg-blue-500 transition-colors">
                 <img src="assets/icons/figmaIcon.png" alt="Figma" class="w-4 h-4 object-contain" />
                 View in Figma
             </a>
         </div>
 
         <!-- Main description -->
-        <div class="prose max-w-none">
-            <p class="text-gray-500 text-lg font-medium">${details.overview}</p>
+        <div class="prose max-w-none dark:prose-invert">
+            <p class="text-gray-500 dark:text-gray-400 text-lg font-medium">${details.overview}</p>
         </div>
 
         <!-- Key Design Changes Table -->
         <div class="mt-8">
-            <h3 class="text-xl font-semibold text-gray-800 mb-4">Key Improvements in the New Design</h3>
-            <div class="overflow-hidden rounded-lg border border-gray-200">
-                <table class="min-w-full divide-y divide-gray-200">
-                    <thead class="bg-gray-50">
+            <h3 class="text-xl font-semibold text-gray-800 dark:text-gray-100 mb-4">Key Improvements in the New Design</h3>
+            <div class="overflow-hidden rounded-lg border border-gray-200 dark:border-gray-700">
+                <table class="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
+                    <thead class="bg-gray-50 dark:bg-gray-800">
                         <tr>
-                            <th class="px-6 py-3 text-left text-sm font-semibold text-gray-900">Element</th>
-                            <th class="px-6 py-3 text-left text-sm font-semibold text-gray-900">Old Design</th>
-                            <th class="px-6 py-3 text-left text-sm font-semibold text-gray-900">New Design</th>
+                            <th class="px-6 py-3 text-left text-sm font-semibold text-gray-900 dark:text-gray-100">Element</th>
+                            <th class="px-6 py-3 text-left text-sm font-semibold text-gray-900 dark:text-gray-100">Old Design</th>
+                            <th class="px-6 py-3 text-left text-sm font-semibold text-gray-900 dark:text-gray-100">New Design</th>
                         </tr>
                     </thead>
-                    <tbody class="divide-y divide-gray-200 bg-white">
+                    <tbody class="divide-y divide-gray-200 dark:divide-gray-700 bg-white dark:bg-gray-900">
                         ${details.designChanges.map(change => `
                             <tr>
-                                <td class="px-6 py-4 text-sm font-medium text-gray-900">${change.element}</td>
-                                <td class="px-6 py-4 text-sm text-gray-500">${change.oldDesign}</td>
-                                <td class="px-6 py-4 text-sm text-gray-900">${change.newDesign}</td>
+                                <td class="px-6 py-4 text-sm font-medium text-gray-900 dark:text-gray-100">${change.element}</td>
+                                <td class="px-6 py-4 text-sm text-gray-500 dark:text-gray-400">${change.oldDesign}</td>
+                                <td class="px-6 py-4 text-sm text-gray-900 dark:text-gray-100">${change.newDesign}</td>
                             </tr>
                         `).join('')}
                     </tbody>
@@ -195,18 +218,18 @@ function updateDetailedInfo(details) {
         </div>
 
         <!-- Why This Matters Section -->
-        <div class="mt-12 bg-gray-50 rounded-xl">
-            <h3 class="text-xl font-semibold mb-3">Why This Matters</h3>
-            <p class="text-gray-600 mb-6">
+        <div class="mt-12">
+            <h3 class="text-xl font-semibold mb-3 dark:text-gray-100">Why This Matters</h3>
+            <p class="text-gray-600 dark:text-gray-300 mb-6">
                 ${details.whyThisMatters.description}
             </p>
             
             <div class="space-y-2">
-                <h4 class="text-sm font-medium text-gray-700 mb-2">Learn more about UX principles:</h4>
+                <h4 class="text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Learn more about UX principles:</h4>
                 <div class="flex flex-wrap gap-3">
                     ${details.whyThisMatters.uxResources.map(resource => `
                         <a href="${resource.url}" target="_blank" 
-                           class="inline-flex items-center gap-1 px-3 py-1 text-sm text-gray-600 bg-white border border-gray-200 rounded-md hover:border-blue-500 hover:text-blue-500 transition-colors">
+                           class="inline-flex items-center gap-1 px-3 py-1 text-sm text-gray-600 dark:text-gray-300 bg-white dark:bg-gray-700 border border-gray-200 dark:border-gray-600 rounded-md hover:border-blue-500 dark:hover:border-blue-400 hover:text-blue-500 dark:hover:text-blue-400 transition-colors">
                             ${resource.title}
                         </a>
                     `).join('')}
@@ -227,8 +250,11 @@ function createNavigationItems() {
     imagePairs.forEach((pair, index) => {
         const item = document.createElement('li');
         item.innerHTML = `
-            <button class="nav-item w-full text-left ${index === currentIndex ? 'active' : ''}" 
-                    onclick="handleNavClick(${index})">
+            <button class="nav-item w-full text-left font-bold text-xs 
+                ${index === currentIndex ? 
+                    'text-blue-500 dark:text-blue-400 bg-blue-50 dark:bg-blue-900/30 hover:bg-blue-100 dark:hover:bg-blue-900/50' : 
+                    'text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800/50'}" 
+                onclick="handleNavClick(${index})">
                 <span class="text-xs font-bold uppercase tracking-wider">${pair.label}</span>
             </button>
         `;
@@ -238,15 +264,19 @@ function createNavigationItems() {
 
 // Make handleNavClick globally accessible
 window.handleNavClick = function(index) {
-    console.log('Handling nav click:', index);
-    currentIndex = index;
+    console.log('Clicked nav item:', index);
+    console.log('Loading details for:', imagePairs[index].label);
     
     // Update active states
     document.querySelectorAll('.nav-item').forEach((item, i) => {
-        item.classList.toggle('active', i === index);
+        if (i === index) {
+            item.className = 'nav-item w-full text-left font-bold text-xs text-blue-500 dark:text-blue-400 bg-blue-50 dark:bg-blue-900/30 hover:bg-blue-100 dark:hover:bg-blue-900/50';
+        } else {
+            item.className = 'nav-item w-full text-left font-bold text-xs text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800/50';
+        }
     });
     
-    // Update comparison
+    currentIndex = index;
     updateComparison(index);
 }
 
@@ -266,11 +296,52 @@ function getIconForLabel(label) {
     </svg>`;
 }
 
+// Theme toggle functionality
+function initializeTheme() {
+    const themeToggleDarkIcon = document.getElementById('theme-toggle-dark-icon');
+    const themeToggleLightIcon = document.getElementById('theme-toggle-light-icon');
+    const themeToggleBtn = document.getElementById('theme-toggle');
+
+    // Change the icons inside the button based on previous settings
+    if (localStorage.getItem('color-theme') === 'dark' || 
+        (!('color-theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+        themeToggleLightIcon.classList.remove('hidden');
+        document.documentElement.classList.add('dark');
+    } else {
+        themeToggleDarkIcon.classList.remove('hidden');
+        document.documentElement.classList.remove('dark');
+    }
+
+    themeToggleBtn.addEventListener('click', function() {
+        // Toggle icons
+        themeToggleDarkIcon.classList.toggle('hidden');
+        themeToggleLightIcon.classList.toggle('hidden');
+
+        // If is set in localStorage
+        if (localStorage.getItem('color-theme')) {
+            if (localStorage.getItem('color-theme') === 'light') {
+                document.documentElement.classList.add('dark');
+                localStorage.setItem('color-theme', 'dark');
+            } else {
+                document.documentElement.classList.remove('dark');
+                localStorage.setItem('color-theme', 'light');
+            }
+        } else {
+            if (document.documentElement.classList.contains('dark')) {
+                document.documentElement.classList.remove('dark');
+                localStorage.setItem('color-theme', 'light');
+            } else {
+                document.documentElement.classList.add('dark');
+                localStorage.setItem('color-theme', 'dark');
+            }
+        }
+    });
+}
+
 // Initialize when DOM is ready
 document.addEventListener('DOMContentLoaded', () => {
     console.log('DOM loaded, initializing...');
     createNavigationItems();
-    
-    // Set initial content
+    initializeTheme();
     updateComparison(0);
 }); 
