@@ -5,7 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Nexus Remastered</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <script type="module" src="https://unpkg.com/img-comparison-slider@7/dist/index.js"></script>
+    <link rel="stylesheet" href="https://unpkg.com/image-compare-viewer/dist/image-compare-viewer.min.css">
+    <script src="https://unpkg.com/image-compare-viewer/dist/image-compare-viewer.min.js"></script>
     <link rel="stylesheet" href="style.css">
 </head>
 <body class="bg-gray-100">
@@ -33,10 +34,10 @@
                 <div class="mx-auto">
                     <!-- Comparison Container -->
                     <div class="comparison-container bg-white overflow-hidden rounded-3xl shadow-xl">
-                        <img-comparison-slider>
-                            <img slot="first" src="images/1A-old.jpg" alt="Old design">
-                            <img slot="second" src="images/1A-new.jpg" alt="New design">
-                        </img-comparison-slider>
+                        <div id="image-compare">
+                            <img src="images/1A-old.jpg" alt="Old design" />
+                            <img src="images/1A-new.jpg" alt="New design" />
+                        </div>
                     </div>
 
                     <!-- Details Section -->
