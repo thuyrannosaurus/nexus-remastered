@@ -8,7 +8,7 @@ const imagePairs = [
         details: {
             title: 'Listings Search Redesign',
             figmaLink: 'https://www.figma.com/design/2MoX9p4NZbALEiM5jXOSXD/CSX-Nexus-Warp?node-id=898-12881&t=PXwuZq06uLH9iDqa-4',
-            overview: 'The listings search interface has been completely revamped to provide a more intuitive and efficient search experience.',
+            overview: 'These improvements significantly enhance usability, efficiency, and clarity for users managing listings. Each change is grounded in UX best practices and ensures a smoother experience for both new and experienced users.',
             designChanges: [
                 {
                     element: 'Filters & Search Inputs',
@@ -31,7 +31,33 @@ const imagePairs = [
                     newDesign: 'Placed strategically for better accessibility'
                 }
             ],
-            implementationNotes: 'The new search interface uses advanced caching techniques and debounced search to ensure smooth performance even with large datasets.'
+            implementationNotes: 'The new search interface uses advanced caching techniques and debounced search to ensure smooth performance even with large datasets.',
+            
+            whyThisMatters: {
+                description: 'The new Listings Overview design aligns with fundamental <b>UX laws</b>, ensuring <b>faster interactions, better readability, and a more intuitive workflow</b>. These changes <b>empower users to find and manage listings more effectively</b>, leading to a <b>smoother experience and higher engagement</b>.',
+                uxResources: [
+                    {
+                        title: 'Fitts Law',
+                        url: 'https://lawsofux.com/fittss-law/'
+                    },
+                    {
+                        title: 'Law of Proximity',
+                        url: 'https://lawsofux.com/law-of-proximity/'
+                    },
+                    {
+                        title: 'Hicks Law',
+                        url: 'https://lawsofux.com/hicks-law/'
+                    },
+                    {
+                        title: 'Nielsen\'s Heuristics',
+                        url: 'https://www.nngroup.com/articles/ten-usability-heuristics/'
+                    },
+                    {
+                        title: 'Design Principles',
+                        url: 'https://principles.design'
+                    }
+                ]
+            }
         }
     },
     { 
@@ -103,12 +129,12 @@ function updateComparison(index) {
     // Initialize with options
     const viewer = new ImageCompare(compareContainer, {
         controlColor: "#3b82f6",
-        controlShadow: false,
+        controlShadow: true,
         addCircle: true,
         addCircleBlur: true,
         smoothing: true,
         smoothingAmount: 700,
-        hoverStart: true,
+        hoverStart: false,
         verticalMode: false,
         startingPoint: 50,
         fluidMode: true,
@@ -129,45 +155,61 @@ function updateDetailedInfo(details) {
     if (!detailsSection || !details) return;
     
     detailsSection.innerHTML = `
-        <h2 class="text-2xl font-semibold text-gray-800 mb-4">${details.title}</h2>
-        
-        <div class="space-y-6">
-            <!-- Project links -->
-            <div class="flex items-center gap-4">
-                <a href="${details.figmaLink}" target="_blank" 
-                   class="inline-flex items-center gap-2 text-sm text-blue-600 hover:text-blue-800">
-                    <img src="assets/icons/figmaIcon.png" alt="Figma" class="w-5 h-5 object-contain" />
-                    View in Figma
-                </a>
-            </div>
+        <div class="flex justify-between items-center mb-4 pt-8">
+            <h2 class="text-3xl font-semibold text-gray-800">${details.title}</h2>
+            <a href="${details.figmaLink}" target="_blank" 
+               class="inline-flex items-center gap-2 px-4 py-2 text-sm font-medium text-white bg-gray-900 rounded-lg hover:bg-blue-600 transition-colors">
+                <img src="assets/icons/figmaIcon.png" alt="Figma" class="w-4 h-4 object-contain" />
+                View in Figma
+            </a>
+        </div>
 
-            <!-- Main description -->
-            <div class="prose max-w-none">
-                <p class="text-gray-600 mb-4">${details.overview}</p>
-            </div>
+        <!-- Main description -->
+        <div class="prose max-w-none">
+            <p class="text-gray-500 text-lg font-medium">${details.overview}</p>
+        </div>
 
-            <!-- Key Design Changes Table -->
-            <div class="mt-8">
-                <h3 class="text-xl font-semibold text-gray-800 mb-4">✨ Key Design Changes</h3>
-                <div class="overflow-hidden rounded-lg border border-gray-200">
-                    <table class="min-w-full divide-y divide-gray-200">
-                        <thead class="bg-gray-50">
+        <!-- Key Design Changes Table -->
+        <div class="mt-8">
+            <h3 class="text-xl font-semibold text-gray-800 mb-4">Key Improvements in the New Design</h3>
+            <div class="overflow-hidden rounded-lg border border-gray-200">
+                <table class="min-w-full divide-y divide-gray-200">
+                    <thead class="bg-gray-50">
+                        <tr>
+                            <th class="px-6 py-3 text-left text-sm font-semibold text-gray-900">Element</th>
+                            <th class="px-6 py-3 text-left text-sm font-semibold text-gray-900">Old Design</th>
+                            <th class="px-6 py-3 text-left text-sm font-semibold text-gray-900">New Design</th>
+                        </tr>
+                    </thead>
+                    <tbody class="divide-y divide-gray-200 bg-white">
+                        ${details.designChanges.map(change => `
                             <tr>
-                                <th class="px-6 py-3 text-left text-sm font-semibold text-gray-900">Element</th>
-                                <th class="px-6 py-3 text-left text-sm font-semibold text-gray-900">Old Design</th>
-                                <th class="px-6 py-3 text-left text-sm font-semibold text-gray-900">New Design</th>
+                                <td class="px-6 py-4 text-sm font-medium text-gray-900">${change.element}</td>
+                                <td class="px-6 py-4 text-sm text-gray-500">${change.oldDesign}</td>
+                                <td class="px-6 py-4 text-sm text-gray-900">${change.newDesign}</td>
                             </tr>
-                        </thead>
-                        <tbody class="divide-y divide-gray-200 bg-white">
-                            ${details.designChanges.map(change => `
-                                <tr>
-                                    <td class="px-6 py-4 text-sm font-medium text-gray-900">${change.element}</td>
-                                    <td class="px-6 py-4 text-sm text-gray-500">${change.oldDesign}</td>
-                                    <td class="px-6 py-4 text-sm text-gray-900">${change.newDesign}</td>
-                                </tr>
-                            `).join('')}
-                        </tbody>
-                    </table>
+                        `).join('')}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Why This Matters Section -->
+        <div class="mt-12 bg-gray-50 rounded-xl">
+            <h3 class="text-xl font-semibold mb-3">Why This Matters</h3>
+            <p class="text-gray-600 mb-6">
+                ${details.whyThisMatters.description}
+            </p>
+            
+            <div class="space-y-2">
+                <h4 class="text-sm font-medium text-gray-700 mb-2">Learn more about UX principles:</h4>
+                <div class="flex flex-wrap gap-3">
+                    ${details.whyThisMatters.uxResources.map(resource => `
+                        <a href="${resource.url}" target="_blank" 
+                           class="inline-flex items-center gap-1 px-3 py-1 text-sm text-gray-600 bg-white border border-gray-200 rounded-md hover:border-blue-500 hover:text-blue-500 transition-colors">
+                            ${resource.title}
+                        </a>
+                    `).join('')}
                 </div>
             </div>
         </div>
