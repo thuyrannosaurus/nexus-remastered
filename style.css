@@ -151,10 +151,12 @@ a.hover\:text-blue-800:hover {
 
 .nav-item:hover:not(.active) {
     background-color: #f3f4f6;
+    @apply dark:bg-gray-800;
 }
 
 .nav-item.active {
-    color: #3b82f6;
+    @apply text-blue-500 dark:text-blue-400;
+    @apply bg-blue-50 dark:bg-blue-900/30;
 }
 
 /* Sticky sidebar styles */
@@ -171,6 +173,11 @@ aside {
     min-height: 100vh;
     display: flex;
     align-items: center;
+}
+
+/* Custom logo filter for dark mode */
+.dark .logo-filter {
+    filter: brightness(0) invert(1);
 }
 
 
