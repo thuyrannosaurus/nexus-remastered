@@ -171,10 +171,11 @@ function updateComparison(index) {
             hoverStart: false,
             verticalMode: false,
             startingPoint: 50,
+            showLabels: true,
             labelOptions: {
-                before: 'Old',
-                after: 'New',
-                onHover: true
+                before: 'Before',
+                after: 'After',
+                onHover: true,
             }
         };
         
