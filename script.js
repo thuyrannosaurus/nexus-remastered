@@ -122,21 +122,6 @@ const imagePairs = [
         }
     },
 
-    {
-        old: 'images/1C-old.jpg',
-        new: 'images/1C-new.jpg',
-        label: 'Users',
-        description: 'Redesigned the listing details page for better information hierarchy.',
-        
-    },
-
-    {
-        old: 'images/1D-old.jpg',
-        new: 'images/1D-new.jpg',
-        label: 'Customers',
-        description: 'Redesigned the listing details page for better information hierarchy.',
-        
-    },
 
     {
         "old": "images/1E-old.jpg",
@@ -185,19 +170,7 @@ const imagePairs = [
         }
     },
 
-    {
-        old: 'images/1F-old.jpg',
-        new: 'images/1F-new.jpg',
-        label: 'Manage access',
-        description: 'Redesigned the listing details page for better information hierarchy.',
-    },
 
-    {
-        old: 'images/1G-old.jpg',
-        new: 'images/1G-new.jpg',
-        label: 'External links',
-        description: 'Redesigned the listing details page for better information hierarchy.',
-    },
 ];
 
 let currentIndex = 0;
