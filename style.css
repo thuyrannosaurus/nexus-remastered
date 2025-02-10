@@ -207,25 +207,13 @@ body {
     border-radius: 12px;
     border: 1px solid #dddddd;
     overflow: hidden;
-    @apply border border-gray-200 dark:border-gray-700;
 }
 
-.design-changes-table th {
-    padding: 16px 24px;
-    white-space: nowrap;
-    background: rgb(249 250 251);
-    @apply dark:bg-gray-800;
-}
-
+.design-changes-table th,
 .design-changes-table td {
     padding: 16px 24px;
     vertical-align: top;
     line-height: 1.5;
-}
-
-/* Add background to tbody for consistent appearance */
-.design-changes-table tbody {
-    @apply bg-white dark:bg-gray-800;
 }
 
 /* Column widths */

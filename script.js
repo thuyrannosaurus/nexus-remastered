@@ -268,19 +268,19 @@ function updateDetailedInfo(details) {
         
         <div class="table-container">
             <table class="design-changes-table w-full mb-8">
-                <thead class="bg-gray-50 dark:bg-gray-800 ">
+                <thead class="bg-gray-50 dark:bg-gray-800">
                     <tr>
-                        <th class="text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">Element</th>
-                        <th class="text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">Old Design</th>
-                        <th class="text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">New Design</th>
+                        <th class="text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider whitespace-nowrap">Element</th>
+                        <th class="text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider whitespace-nowrap">Old Design</th>
+                        <th class="text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider whitespace-nowrap">New Design</th>
                     </tr>
                 </thead>
                 <tbody class="bg-white dark:bg-gray-800 divide-y divide-gray-200 dark:divide-gray-700">
                     ${details.designChanges.map(change => `
                         <tr>
-                            <td class="font-medium text-gray-900 dark:text-gray-100">${change.element}</td>
-                            <td class="text-gray-500 dark:text-gray-400">${change.oldDesign}</td>
-                            <td class="text-gray-900 dark:text-gray-100">${change.newDesign}</td>
+                            <td class="text-sm font-medium text-gray-900 dark:text-gray-100">${change.element}</td>
+                            <td class="text-sm text-gray-500 dark:text-gray-400">${change.oldDesign}</td>
+                            <td class="text-sm text-gray-900 dark:text-gray-100">${change.newDesign}</td>
                         </tr>
                     `).join('')}
                 </tbody>
