@@ -139,10 +139,50 @@ const imagePairs = [
     },
 
     {
-        old: 'images/1E-old.jpg',
-        new: 'images/1E-new.jpg',
-        label: 'Conversations',
-        description: 'Redesigned the listing details page for better information hierarchy.',
+        "old": "images/1E-old.jpg",
+        "new": "images/1E-new.jpg",
+        "label": "Conversations",
+        "description": "The Conversation Overview page has been redesigned to provide better clarity, usability, and consistency for customer service agents when reviewing interactions between advertisers and respondents. The new design introduces a parent card that improves contextual navigation, ensuring users can easily identify the listing associated with a conversation. Additionally, UI adjustments have streamlined message readability, improved user role identification, and made moderation tools more accessible and structured.",
+        "details": {
+            "title": "Conversation Overview Redesign",
+            "figmaLink": "https://www.figma.com/design/2MoX9p4NZbALEiM5jXOSXD/CSX-Nexus-Warp?node-id=960-6600&t=8nJcNQ8N02OMv092-4",
+            "overview": "The Conversation Overview page has been redesigned to provide better clarity, usability, and consistency for customer service agents when reviewing interactions between advertisers and respondents. The new design introduces a parent card that improves contextual navigation, ensuring users can easily identify the listing associated with a conversation. Additionally, UI adjustments have streamlined message readability, improved user role identification, and made moderation tools more accessible and structured.",
+            "designChanges": [
+                {
+                    "element": "Parent Card for Context",
+                    "oldDesign": "Object card is ambiguously placed in the same section as users",
+                    "newDesign": "Clearly structured parent card at the top, providing immediate listing context"
+                },
+                {
+                    "element": "Showing extra user information",
+                    "oldDesign": "Displayed in a dropdown, requiring extra vertical space",
+                    "newDesign": "Clear button to expand user information"
+                },
+                {
+                    "element": "Conversation Layout",
+                    "oldDesign": "Full-width chat with uneven spacing",
+                    "newDesign": "More structured message alignment, matching well known chat interfaces, improving readability"
+                },
+            ],
+            "implementationNotes": "New structured message layout and always-visible role indicators improve workflow efficiency.",
+            "whyThisMatters": {
+                "description": "The redesign improves information hierarchy and scanning patterns, making it easier for agents to find critical details quickly while ensuring consistency across internal tools.",
+                "uxResources": [
+                    {
+                        "title": "Law of Proximity",
+                        "url": "https://lawsofux.com/law-of-proximity/"
+                    },
+                    {
+                        "title": "Fitts’s Law",
+                        "url": "https://lawsofux.com/fittss-law/"
+                    },
+                    {
+                        "title": "Miller’s Law",
+                        "url": "https://lawsofux.com/millers-law/"
+                    }
+                ]
+            }
+        }
     },
 
     {
