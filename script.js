@@ -284,59 +284,39 @@ function updateComparison(index) {
 
 // Function to update the detailed information section
 function updateDetailedInfo(details) {
-    console.log('Updating detailed info:', details);
-    const detailsSection = document.querySelector('.detailed-info');
-    if (!detailsSection || !details) {
-        console.error('Missing elements:', { detailsSection, details });
-        return;
-    }
+    const detailsContainer = document.querySelector('.detailed-info');
     
-    detailsSection.innerHTML = `
-        <div class="flex justify-between items-center mb-4 pt-8">
-            <h2 class="text-3xl font-semibold text-gray-800 dark:text-gray-100">${details.title}</h2>
-            <a href="${details.figmaLink}" target="_blank" 
-               class="inline-flex items-center gap-2 px-4 py-2 text-sm font-medium text-white bg-gray-900 dark:bg-gray-700 rounded-lg hover:bg-blue-600 dark:hover:bg-blue-500 transition-colors">
-                <img src="assets/icons/figmaIcon.png" alt="Figma" class="w-4 h-4 object-contain" />
-                View in Figma
-            </a>
+    // Create the content
+    const content = `
+        <div class="px-4 md:px-2">
+            <h2 class="text-2xl font-bold mb-6">${details.title}</h2>
+            <p class="mb-8 text-gray-600 dark:text-gray-300">${details.overview}</p>
         </div>
-
-        <!-- Main description -->
-        <div class="prose max-w-none dark:prose-invert">
-            <p class="text-gray-500 dark:text-gray-400 text-lg font-medium">${details.overview}</p>
-        </div>
-
-        <!-- Key Design Changes Table -->
-        <div class="mt-8">
-            <h3 class="text-xl font-semibold text-gray-800 dark:text-gray-100 mb-4">Key Improvements in the New Design</h3>
-            <div class="overflow-hidden rounded-lg border border-gray-200 dark:border-gray-700">
-                <table class="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
-                    <thead class="bg-gray-50 dark:bg-gray-800">
+        
+        <div class="table-container">
+            <table class="design-changes-table w-full mb-8">
+                <thead class="bg-gray-50 dark:bg-gray-800 ">
+                    <tr>
+                        <th class="text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">Element</th>
+                        <th class="text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">Old Design</th>
+                        <th class="text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">New Design</th>
+                    </tr>
+                </thead>
+                <tbody class="bg-white dark:bg-gray-800 divide-y divide-gray-200 dark:divide-gray-700">
+                    ${details.designChanges.map(change => `
                         <tr>
-                            <th class="px-6 py-3 text-left text-sm font-semibold text-gray-900 dark:text-gray-100">Element</th>
-                            <th class="px-6 py-3 text-left text-sm font-semibold text-gray-900 dark:text-gray-100">Old Design</th>
-                            <th class="px-6 py-3 text-left text-sm font-semibold text-gray-900 dark:text-gray-100">New Design</th>
+                            <td class="font-medium text-gray-900 dark:text-gray-100">${change.element}</td>
+                            <td class="text-gray-500 dark:text-gray-400">${change.oldDesign}</td>
+                            <td class="text-gray-900 dark:text-gray-100">${change.newDesign}</td>
                         </tr>
-                    </thead>
-                    <tbody class="divide-y divide-gray-200 dark:divide-gray-700 bg-white dark:bg-gray-900">
-                        ${details.designChanges.map(change => `
-                            <tr>
-                                <td class="px-6 py-4 text-sm font-medium text-gray-900 dark:text-gray-100">${change.element}</td>
-                                <td class="px-6 py-4 text-sm text-gray-500 dark:text-gray-400">${change.oldDesign}</td>
-                                <td class="px-6 py-4 text-sm text-gray-900 dark:text-gray-100">${change.newDesign}</td>
-                            </tr>
-                        `).join('')}
-                    </tbody>
-                </table>
-            </div>
+                    `).join('')}
+                </tbody>
+            </table>
         </div>
 
-        <!-- Why This Matters Section -->
-        <div class="mt-12">
-            <h3 class="text-xl font-semibold mb-3 dark:text-gray-100">Why This Matters</h3>
-            <p class="text-gray-600 dark:text-gray-300 mb-6">
-                ${details.whyThisMatters.description}
-            </p>
+        <div class="px-4 md:px-2">
+            <h3 class="text-xl font-bold mb-4">Why This Matters</h3>
+            <p class="mb-6 text-gray-600 dark:text-gray-300">${details.whyThisMatters.description}</p>
             
             <div class="space-y-2">
                 <h4 class="text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Learn more about UX principles:</h4>
@@ -351,6 +331,8 @@ function updateDetailedInfo(details) {
             </div>
         </div>
     `;
+    
+    detailsContainer.innerHTML = content;
 }
 
 // Mobile menu functionality
