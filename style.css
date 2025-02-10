@@ -37,28 +37,6 @@ body {
     display: none;
 }
 
-/* Navigation arrow buttons */
-#prevBtn {
-    left: -8px;  /* Move outside the container by 56px */
-    transform: translateY(-50%);
-}
-
-#nextBtn {
-    right: -8px;  /* Move outside the container by 56px */
-    transform: translateY(-50%);
-}
-
-/* Make container relative to allow arrows to position correctly */
-.relative {
-    padding: 0 56px; /* Add padding to make space for the arrows */
-}
-
-/* Thumbnail tray styles */
-.overflow-x-auto {
-    -webkit-overflow-scrolling: touch;
-    scrollbar-width: none;
-    -ms-overflow-style: none;
-}
 
 .overflow-x-auto::-webkit-scrollbar {
     display: none;
@@ -141,7 +119,7 @@ a.hover\:text-blue-800:hover {
     --shadow-subtle: 0 2px 4px rgba(0,0,0,0.05);
     --shadow-medium: 0 4px 6px rgba(0,0,0,0.04);
     /* Add sidebar positioning variable */
-    --sidebar-offset: -30vh;  /* Negative value moves it up, positive moves it down */
+    --sidebar-offset: -15vh;  /* Negative value moves it up, positive moves it down */
 }
 
 /* Navigation items */
