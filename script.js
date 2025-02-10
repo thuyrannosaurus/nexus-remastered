@@ -173,11 +173,11 @@ const imagePairs = [
                         "url": "https://lawsofux.com/law-of-proximity/"
                     },
                     {
-                        "title": "Fitts’s Law",
+                        "title": "Fitts's Law",
                         "url": "https://lawsofux.com/fittss-law/"
                     },
                     {
-                        "title": "Miller’s Law",
+                        "title": "Miller's Law",
                         "url": "https://lawsofux.com/millers-law/"
                     }
                 ]
@@ -353,15 +353,56 @@ function updateDetailedInfo(details) {
     `;
 }
 
+// Mobile menu functionality
+function initializeMobileMenu() {
+    const mobileMenuButton = document.getElementById('mobile-menu-button');
+    const closeMobileMenuButton = document.getElementById('close-mobile-menu');
+    const mobileNav = document.getElementById('mobile-nav');
+    const mobileMenu = document.getElementById('mobile-menu');
+
+    function openMobileMenu() {
+        mobileNav.classList.remove('hidden');
+        // Wait a tiny bit before sliding in to ensure the display change has taken effect
+        requestAnimationFrame(() => {
+            mobileMenu.classList.remove('translate-x-full');
+        });
+    }
+
+    function closeMobileMenu() {
+        mobileMenu.classList.add('translate-x-full');
+        // Wait for animation to finish before hiding
+        setTimeout(() => {
+            mobileNav.classList.add('hidden');
+        }, 300);
+    }
+
+    mobileMenuButton.addEventListener('click', openMobileMenu);
+    closeMobileMenuButton.addEventListener('click', closeMobileMenu);
+    
+    // Close menu when clicking outside
+    mobileNav.addEventListener('click', (e) => {
+        if (e.target === mobileNav) {
+            closeMobileMenu();
+        }
+    });
+}
+
+// Update createNavigationItems to handle both desktop and mobile
 function createNavigationItems() {
-    console.log('Creating navigation items...');
     const navList = document.getElementById('navigationList');
-    if (!navList) {
-        console.error('Navigation list element not found!');
+    const mobileNavList = document.getElementById('mobileNavigationList');
+    
+    if (!navList || !mobileNavList) {
+        console.error('Navigation list elements not found!');
         return;
     }
     
+    // Clear existing items
+    navList.innerHTML = '';
+    mobileNavList.innerHTML = '';
+    
     imagePairs.forEach((pair, index) => {
+        // Desktop navigation item
         const item = document.createElement('li');
         item.innerHTML = `
             <button class="nav-item w-full text-left font-bold text-xs ${
@@ -373,26 +414,62 @@ function createNavigationItems() {
             </button>
         `;
         navList.appendChild(item);
+        
+        // Mobile navigation item
+        const mobileItem = document.createElement('li');
+        mobileItem.innerHTML = `
+            <button class="w-full text-left py-3 px-4 rounded-lg font-bold ${
+                index === currentIndex ? 
+                'text-blue-500 dark:text-blue-400 bg-blue-50 dark:bg-blue-900/30' : 
+                'text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800/50'
+            }" onclick="handleMobileNavClick(${index})">
+                <span class="text-sm uppercase tracking-wider">${pair.label}</span>
+            </button>
+        `;
+        mobileNavList.appendChild(mobileItem);
     });
 }
 
-// Make handleNavClick globally accessible
+// Handle mobile navigation clicks
+window.handleMobileNavClick = function(index) {
+    handleNavClick(index);
+    // Close mobile menu after selection
+    const mobileNav = document.getElementById('mobile-nav');
+    const mobileMenu = document.getElementById('mobile-menu');
+    mobileMenu.classList.add('translate-x-full');
+    setTimeout(() => {
+        mobileNav.classList.add('hidden');
+    }, 300);
+};
+
+// Define handleNavClick once at the top level
 window.handleNavClick = function(index) {
-    console.log('Clicked nav item:', index);
-    console.log('Loading details for:', imagePairs[index].label);
+    console.log('Navigation clicked:', index);
+    currentIndex = index;
     
-    // Update active states
-    document.querySelectorAll('.nav-item').forEach((item, i) => {
+    // Update active states for both desktop and mobile navigation
+    document.querySelectorAll('.nav-item, #mobileNavigationList button').forEach((item, i) => {
         if (i === index) {
-            item.className = 'nav-item w-full text-left font-bold text-xs text-blue-500 dark:text-blue-400 bg-blue-50 dark:bg-blue-900/30 hover:bg-blue-100 dark:hover:bg-blue-900/50';
+            if (item.classList.contains('nav-item')) {
+                item.className = 'nav-item w-full text-left font-bold text-xs text-blue-500 dark:text-blue-400 bg-blue-50 dark:bg-blue-900/30 hover:bg-blue-100 dark:hover:bg-blue-900/50';
+            } else {
+                item.className = 'w-full text-left py-3 px-4 rounded-lg font-bold text-blue-500 dark:text-blue-400 bg-blue-50 dark:bg-blue-900/30';
+            }
         } else {
-            item.className = 'nav-item w-full text-left font-bold text-xs text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800/50';
+            if (item.classList.contains('nav-item')) {
+                item.className = 'nav-item w-full text-left font-bold text-xs text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800/50';
+            } else {
+                item.className = 'w-full text-left py-3 px-4 rounded-lg font-bold text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800/50';
+            }
         }
     });
     
-    currentIndex = index;
+    // Smooth scroll to top
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+    
     updateComparison(index);
-}
+    updateNavButtons();
+};
 
 // Add getIconForLabel function
 function getIconForLabel(label) {
@@ -452,10 +529,64 @@ function initializeTheme() {
     });
 }
 
-// Initialize first comparison on load
+function initializeNavButtons() {
+    const prevButton = document.getElementById('prev-page');
+    const nextButton = document.getElementById('next-page');
+    const prevButtonDesktop = document.getElementById('prev-page-desktop');
+    const nextButtonDesktop = document.getElementById('next-page-desktop');
+
+    window.updateNavButtons = function() {
+        const isFirst = currentIndex === 0;
+        const isLast = currentIndex === (imagePairs.length - 1);
+        
+        // Update button states
+        [
+            { button: prevButton, disabled: isFirst },
+            { button: nextButton, disabled: isLast },
+            { button: prevButtonDesktop, disabled: isFirst },
+            { button: nextButtonDesktop, disabled: isLast }
+        ].forEach(({ button, disabled }) => {
+            button.disabled = disabled;
+            button.classList.toggle('opacity-50', disabled);
+            button.classList.toggle('cursor-not-allowed', disabled);
+        });
+    };
+
+    // Navigation handlers
+    prevButton.addEventListener('click', () => {
+        if (currentIndex > 0) {
+            handleNavClick(currentIndex - 1);
+        }
+    });
+
+    nextButton.addEventListener('click', () => {
+        if (currentIndex < imagePairs.length - 1) {
+            handleNavClick(currentIndex + 1);
+        }
+    });
+
+    prevButtonDesktop.addEventListener('click', () => {
+        if (currentIndex > 0) {
+            handleNavClick(currentIndex - 1);
+        }
+    });
+
+    nextButtonDesktop.addEventListener('click', () => {
+        if (currentIndex < imagePairs.length - 1) {
+            handleNavClick(currentIndex + 1);
+        }
+    });
+
+    // Initialize button states
+    updateNavButtons();
+}
+
+// Update initialization
 document.addEventListener('DOMContentLoaded', () => {
     console.log('DOM loaded, initializing...');
     createNavigationItems();
     initializeTheme();
+    initializeMobileMenu();
+    initializeNavButtons();
     updateComparison(0);
 }); 
